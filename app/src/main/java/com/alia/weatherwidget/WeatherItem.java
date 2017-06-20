@@ -2,25 +2,16 @@ package com.alia.weatherwidget;
 
 
 public class WeatherItem {
-    private String mTempMin;
-    private String mTempMax;
+    private String mTemp;
     private String mDescription;
 
 
-    public String getTempMin() {
-        return mTempMin;
+    public String getTemp() {
+        return mTemp;
     }
 
-    public void setTempMin(String tempMin) {
-        mTempMin = tempMin;
-    }
-
-    public String getTempMax() {
-        return mTempMax;
-    }
-
-    public void setTempMax(String tempMax) {
-        mTempMax = tempMax;
+    public void setTemp(String temp) {
+        mTemp = temp;
     }
 
     public String getDescription() {

@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTempMin;
-    private TextView mTempMax;
+    private TextView mTemp;
     private TextView mDescription;
 
     private List<WeatherItem> mItems = new ArrayList<>();
@@ -20,8 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTempMin = (TextView) findViewById(R.id.textview_tempMin);
-        mTempMax = (TextView) findViewById(R.id.textview_tempMax);
+        mTemp = (TextView) findViewById(R.id.textview_temp);
         mDescription = (TextView) findViewById(R.id.textview_desc);
 
         new FetchItemsTask().execute();
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private class FetchItemsTask extends AsyncTask<Void, Void, List<WeatherItem>> {
         @Override
         protected List<WeatherItem> doInBackground(Void... params) {
-
             return new WeatherFetcher().fetchItems();
         }
 
@@ -38,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<WeatherItem> items) {
             mItems = items;
             for (int i = 0; i < mItems.size(); i++) {
-
-                mTempMin.setText(mItems.get(i).getTempMin());
-                mTempMax.setText(mItems.get(i).getTempMax());
+                mTemp.setText(mItems.get(i).getTemp());
                 mDescription.setText(mItems.get(i).getDescription());
 
             }

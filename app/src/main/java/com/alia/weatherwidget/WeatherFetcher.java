@@ -1,6 +1,5 @@
 package com.alia.weatherwidget;
 
-
 import android.net.Uri;
 import android.util.Log;
 
@@ -27,7 +26,7 @@ public class WeatherFetcher {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             InputStream in = connection.getInputStream();
-            //getResponceCode() Gets the status code from an HTTP response message. OK=200
+            //Gets the status code from an HTTP response message. OK=200
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new IOException(connection.getResponseMessage() +
                         ": with " +
@@ -35,7 +34,7 @@ public class WeatherFetcher {
             }
             int bytesRead = 0;
             byte[] buffer = new byte[1024];
-            //read(buffer) Reads 1024 of bytes from the input stream and stores them into the buffer aaray
+            //Reads 1024 of bytes from the input stream and stores them into the buffer array
             while ((bytesRead = in.read(buffer)) > 0) {
                 out.write(buffer, 0, bytesRead);
             }
@@ -55,10 +54,9 @@ public class WeatherFetcher {
         try {
             String url = Uri.parse(API_URL)
                     .buildUpon()        // to obtain a builder representing an existing URI
-                    .appendQueryParameter("id", "703448")
+                    .appendQueryParameter("id", "703448")       //Kyiv id
                     .appendQueryParameter("APPID", API_KEY)
                     .appendQueryParameter("units", "metric")
-                    .appendQueryParameter("lang", "ua")
                     .build().toString();
             String jsonString = getUrlString(url);
             Log.i(TAG, "Received JSON: " + jsonString);
@@ -77,18 +75,13 @@ public class WeatherFetcher {
             throws IOException, JSONException {
 
         JSONObject mainJsonObject = jsonBody.getJSONObject("main");
-        String tempMin = mainJsonObject.getString("temp_min");
-        String tempMax = mainJsonObject.getString("temp_max");
+        String temp = mainJsonObject.getString("temp_min");
         JSONArray weatherJsonArray = jsonBody.getJSONArray("weather");
         JSONObject innerJsonObject = weatherJsonArray.getJSONObject(0);
         String description = innerJsonObject.getString("description");
-        String name = jsonBody.getString("name");
-
-
 
         WeatherItem item = new WeatherItem();
-        item.setTempMin(tempMin);
-        item.setTempMax(tempMax);
+        item.setTemp(temp);
         item.setDescription(description);
         items.add(item);
     }
